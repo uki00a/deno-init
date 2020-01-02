@@ -34,8 +34,7 @@ function createPackage(name: string, tsVersion: string): object {
 }
 
 async function prepareGitIgnore(): Promise<void> {
-  const filename = '.gitignore';
-  const dest = join(dirname(new URL(import.meta.url).pathname), filename);
+  const dest = join(Deno.cwd(), '.gitignore');
   const pathsToIgnore = [
     'tsconfig.json',
     'package.json',
