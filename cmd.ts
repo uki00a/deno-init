@@ -1,6 +1,5 @@
 import { basename, join, dirname } from 'https://deno.land/std@v0.27.0/path/mod.ts';
 import { writeFileStr } from 'https://deno.land/std@v0.27.0/fs/write_file_str.ts';
-import { copy } from 'https://deno.land/std@v0.27.0/fs/copy.ts';
 
 function createTsConfig(denoDir: string): object {
   return {
@@ -36,11 +35,15 @@ function createPackage(name: string, tsVersion: string): object {
 
 async function prepareGitIgnore(): Promise<void> {
   const filename = '.gitignore';
-  const src = join(Deno.cwd(), filename);
   const dest = join(dirname(new URL(import.meta.url).pathname), filename);
-  if (src !== dest) {
-    await copy(src, dest);
-  }
+  const pathsToIgnore = [
+    'tsconfig.json',
+    'package.json',
+    'node_modules',
+    'yarn.lock',
+    'package-lock.json'
+  ];
+  await writeFileStr(dest, pathsToIgnore.join('\n'));
 }
 
 async function writeFileJson(path: string, json: object): Promise<void> {
