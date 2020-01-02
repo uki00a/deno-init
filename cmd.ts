@@ -9,10 +9,10 @@ function createTsConfig(denoDir: string): object {
       "baseUrl": ".",
       "paths": {
         "https://*": [
-          `${denoDir}/deps/https/*`
+          join(denoDir, '/deps/https/*')
         ],
         "http://*": [
-          `${denoDir}/deps/http/*`
+          join(denoDir, '/deps/http/*')
         ]
       },
      "plugins": [{ "name": "typescript-deno-plugin" }]
